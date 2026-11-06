@@ -1,0 +1,17 @@
+.env
+.venv/
+__pycache__/
+.pytest_cache/
+node_modules/
+.vscode/
+.kombai/
+*.py[cod]
+*.sqlite3
+*.log
+*.err
+nsp_early_warning.sqlite3
+data/vf_evidence/
+tests/tmp/
+tests/tmp_*.js
+tests/tmp_*.mjs
+vf_test_out.txt

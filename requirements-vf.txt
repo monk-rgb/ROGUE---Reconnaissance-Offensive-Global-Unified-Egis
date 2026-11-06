@@ -1,0 +1,34 @@
+# Optional dependencies for the ROUGE Visual Forensics module.
+#
+# The base early-warning service runs with the Python standard library only.
+# Visual Forensics needs the packages below to perform real image analysis.
+# If a package is missing, the module reports the capability as UNSUPPORTED
+# rather than fabricating a result. Install with:
+#
+#   pip install -r requirements-vf.txt
+#
+# --- Required for any analysis -------------------------------------------------
+# Pillow: image decoding, EXIF, enhancement (MIT-CMU license, ~3 MB).
+Pillow>=10
+# numpy: quality/lighting/shadow statistics (BSD license, ~15 MB).
+numpy>=1.26
+
+# --- Recommended: real face/eye detection --------------------------------------
+# OpenCV headless: Haar cascade face/eye detection and denoising
+# (Apache 2.0 license, ~40-45 MB wheel). Use the 4.x line: OpenCV 5.x moved the
+# classic CascadeClassifier API out of the default namespace. The cascade XMLs
+# are vendored under data/vf_models/ (see that README for provenance).
+opencv-python-headless>=4.8,<5
+
+# --- Optional: text/OCR extraction ---------------------------------------------
+# Used by Visual Forensics OCR and Number Plate Reader video search.
+# pytesseract is only a wrapper; it needs the Tesseract engine installed
+# separately (Apache 2.0). Without the engine, OCR is reported as unsupported.
+pytesseract>=0.3.10
+
+# --- Optional: AI super-resolution ---------------------------------------------
+# Real-ESRGAN is NOT installed by default: it requires large model weights,
+# a GPU for practical speed, and carries its own (BSD-3) licensing and model
+# terms. Until it is deliberately provisioned and documented, the clarity engine
+# offers Lanczos resampling only and states plainly that resampling does not
+# recover information that was never captured. See superresolution_status().

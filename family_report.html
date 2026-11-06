@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10120e">
+  <title>ROUGE // Family missing-person report</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root { color-scheme:dark; --bg:#10120e; --panel:#171a14; --line:#353a2c; --muted:#929783; --text:#e8e9df; --olive:#a6b76c; --amber:#e5a84c; --red:#e26457; --mono:"IBM Plex Mono",Consolas,monospace; --display:"Barlow Condensed",Impact,sans-serif; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; color:var(--text); background:var(--bg); font:13px/1.55 var(--mono); }
+    button,input,select,textarea { font:inherit; }
+    button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible { outline:2px solid var(--amber); outline-offset:3px; }
+    .public-banner { padding:9px 14px; border-bottom:1px solid #777448; background:#25271e; color:#e3c77a; text-align:center; font-size:10px; letter-spacing:.09em; }
+    main { width:min(920px,calc(100% - 28px)); margin:22px auto 50px; }
+    .brand { padding-bottom:12px; border-bottom:1px solid var(--line); }
+    .brand h1 { margin:0; font:800 34px/.95 var(--display); letter-spacing:.05em; }
+    .brand p { color:var(--muted); font-size:10px; }
+    .notice { margin:14px 0; padding:12px; border-left:2px solid var(--olive); background:#191d15; color:#cbd0c0; font-size:10px; }
+    .panel { margin-top:12px; border:1px solid var(--line); background:var(--panel); }
+    .panel-heading { padding:14px 16px; border-bottom:1px solid var(--line); }
+    .panel-heading h2 { margin:0; font:700 20px/.95 var(--display); letter-spacing:.06em; text-transform:uppercase; }
+    .panel-body { padding:16px; }
+    .form-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .field { display:flex; min-width:0; flex-direction:column; gap:5px; }
+    .field.full { grid-column:1/-1; }
+    label { color:#c3c7b7; font-size:10px; letter-spacing:.04em; }
+    input,select,textarea { width:100%; min-height:39px; padding:9px; border:1px solid #414636; border-radius:0; background:#10120e; color:var(--text); }
+    textarea { min-height:80px; resize:vertical; }
+    input::placeholder,textarea::placeholder { color:#737867; }
+    .btn { min-height:38px; padding:8px 12px; border:1px solid #657743; background:#23291b; color:var(--olive); cursor:pointer; text-transform:uppercase; font-size:10px; }
+    .btn.secondary { border-color:var(--line); background:transparent; color:var(--text); }
+    .btn.amber-btn { border-color:#80602e; background:#292316; color:var(--amber); }
+    .message { min-height:18px; margin:9px 0 0; font-size:10px; }
+    .message.error,.warning { color:var(--red); }
+    .message.success,.green { color:var(--olive); }
+    .muted { color:var(--muted); font-size:10px; }
+    .case-map { min-height:250px; border:1px solid var(--line); background:#18231c; }
+    .case-map-message { min-height:16px; margin-top:4px; color:var(--muted); font-size:9px; }
+    .case-photo-grid { display:flex; flex-wrap:wrap; gap:7px; margin-top:8px; }
+    .case-photo-grid img { width:70px; height:70px; object-fit:cover; border:1px solid var(--line); }
+    .case-photo-checks { margin-top:6px; color:var(--amber); font-size:10px; }
+    .case-sensitive { color:var(--amber); }
+    .case-consent { display:grid; gap:9px; margin-top:14px; padding:11px; border:1px solid var(--line); }
+    .case-consent label { display:flex; align-items:flex-start; gap:8px; }
+    .case-consent input { width:auto; min-height:0; margin-top:3px; }
+    .case-honeypot { position:absolute; left:-10000px; width:1px; height:1px; overflow:hidden; }
+    .case-privacy { color:#c6b88c; font-size:9px; }
+    .case-verification { margin-top:12px; }
+    .case-verification-row { display:grid; grid-template-columns:auto minmax(120px,1fr) auto; gap:8px; }
+    .case-map-fallback { padding:18px; color:var(--amber); font-size:10px; }
+    .sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); }
+    #family-result { overflow-wrap:anywhere; }
+    @media(max-width:600px) { .form-grid { grid-template-columns:1fr; } .field.full { grid-column:auto; } .case-verification-row { grid-template-columns:1fr; } .brand h1 { font-size:29px; } }
+  </style>
+</head>
+<body>
+  <div class="public-banner">FAMILY REPORT PORTAL · PRIVATE STATUS ACCESS · DO NOT SUBMIT EMERGENCY INFORMATION HERE</div>
+  <main>
+    <header class="brand"><h1>ROUGE // Family report</h1><p>Missing-person and suspected-kidnapping reports</p></header>
+    <div class="notice">If someone is in immediate danger, contact local emergency services. Reports are private and remain <strong>Unverified</strong> until an officer reviews them. You can check only your own report using its private status token.</div>
+    <section class="panel"><div class="panel-heading"><h2>Report a person missing</h2></div><div id="family-form-host" class="panel-body"></div></section>
+    <section class="panel"><div class="panel-heading"><h2>Check your report status</h2></div><form id="family-status-form" class="panel-body">
+      <div class="form-grid"><div class="field"><label for="status-reference">Report reference</label><input id="status-reference" required autocomplete="off"></div>
+      <div class="field"><label for="status-token">Private status-check token</label><input id="status-token" required autocomplete="off"></div></div>
+      <p id="family-status-message" class="message" role="status"></p><div id="family-status-result"></div>
+      <div class="form-actions"><button class="btn secondary">Check report status</button></div>
+    </form></section>
+    <p class="muted">Privacy: this public portal cannot access case photos, locations beyond your submitted report, family contact details, officer notes, assignments, or the verified photo gallery. Emails are used to verify report ownership.</p>
+  </main>
+  <script src="/case_forms.js"></script>
+  <script src="/family_report.js"></script>
+</body>
+</html>
